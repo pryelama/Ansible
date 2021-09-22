@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  #become_user: root
+  tasks:
+  - name: install git
+    yum:
+      name: git
+      state: present
+      update_cache: yes
+#  tasks:
+  - name: install apache
+    yum:
+      name: httpd
+      state: present
+  - name: create file
+    file:
+      path: "/home/webserver/test_file.txt"
+      state: touch
+#    become: yes
+  - name: create file with content
+    copy:
+      dest: "/home/webserver/test_file.txt"
+      content: |
+        physco
+        pranavi pichamma
+  - name: changing the content of the file
+    lineinfile:
+      path: /home/webserver/test_file.txt
+      regexp: 'pranavi'
+      line: 'sunny'
